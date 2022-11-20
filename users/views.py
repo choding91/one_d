@@ -14,22 +14,14 @@ class SignupView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-    # # 회원탈퇴
-    # def delete(self, request, **kwargs):
-    #     if kwargs.get('user_id') is None:
-    #         return Response("invalid request", status=status.HTTP_400_BAD_REQUEST)
-    #     else:
-    #         user_id = kwargs.get('user_id')
-    #         user_object = User.objects.get(id=user_id)
-    #         user_object.delete()
-    #         return Response("delete ok", status=status.HTTP_200_OK)
+    def delete(self, request):
+        user = request.user
+        user.delete()
+        return Response({"message": "회원 탈퇴 완료!"}, status=status.HTTP_200_OK)
 
 
 class LogoutView(APIView):
     def delete(self, request):
         if request.user.is_authenticated:
             logout(request)
-            return Response({'message': 'logout complete'}, status=status.HTTP_204_NO_CONTENT)
-        else:
-            return Response({'message': 'invalid request'}, status=status.HTTP_200_OK)
+            return Response({"message": "로그아웃 완료!"}, status=status.HTTP_204_NO_CONTENT)
