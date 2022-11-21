@@ -26,11 +26,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    username = models.CharField(
-        verbose_name="username",
-        max_length=50,
-        unique=True,
-    )
+    username = models.CharField(verbose_name="username", max_length=50, unique=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 

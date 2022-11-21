@@ -20,20 +20,13 @@ class ArticleSerializer(serializers.ModelSerializer):
 class ArticleCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = (
-            "title",
-            "content",
-            "image",
-        )
+        fields = ("title", "content", "image")
 
 
 class ArticleUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = (
-            "title",
-            "content",
-        )
+        fields = ("title", "content")
 
 
 class CommentSerializer(serializers.ModelSerializer):

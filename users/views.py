@@ -45,6 +45,14 @@ class FollowingView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class FollowersView(APIView):
+    def get(self, request):
+        user = request.user
+        followers = user.followers.all()
+        serializer = FollowingSerializer(followers, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 class FollowingUserView(APIView):
     def post(self, request, user_id):
         user = get_object_or_404(User, id=user_id)

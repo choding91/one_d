@@ -10,4 +10,5 @@ urlpatterns = [
     path("<int:article_id>/like/", views.ArticleLikeView.as_view(), name="article_like_view"),
     path("<int:article_id>/comment/", views.ArticleCommentView.as_view(), name="article_comment_view"),
     path("<int:article_id>/comment/<comment_id>/", views.ArticleCommentDetialView.as_view(), name="article_comment_detail_view"),
+    path("search/", views.SearchView.as_view(), name="search_view"),
 ]

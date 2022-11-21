@@ -1,6 +1,7 @@
 from django.db.models import Count
 from rest_framework import permissions, status
-from rest_framework.generics import get_object_or_404
+from rest_framework.filters import SearchFilter
+from rest_framework.generics import ListAPIView, get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from articles.models import Article, Comment
@@ -114,3 +115,11 @@ class LikerankView(APIView):
         articles = Article.objects.annotate(count=Count("likes")).order_by("-count")[:3]
         serializer = ArticleSerializer(articles, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class SearchView(ListAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    filter_backends = [SearchFilter]
+    # 외래키 모델에서 필드를 가져올 때는 model__fields 형태로 작성
+    search_fields = ("title", "user__username")
