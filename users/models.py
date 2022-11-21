@@ -34,6 +34,8 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
+    following = models.ManyToManyField("self", symmetrical=False, blank=True, related_name="followers")
+
     objects = UserManager()
 
     USERNAME_FIELD = "username"
@@ -50,3 +52,12 @@ class User(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(blank=True, default="default_profile_pic.jpg", upload_to="profile_pics")
+    bio = models.TextField(max_length=500, blank=True)
+
+    def __str__(self):
+        return str(f"{self.user} / {self.bio}")

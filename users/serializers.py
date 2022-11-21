@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from users.models import User
+from users.models import User, Profile
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -23,3 +23,14 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data["password"])
         user.save()
         return user
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+
+    def get_user(self, obj):
+        return obj.user.username
+
+    class Meta:
+        model = Profile
+        fields = "__all__"

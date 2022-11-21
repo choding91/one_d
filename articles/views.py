@@ -1,3 +1,4 @@
+from django.db.models import Count
 from rest_framework import permissions, status
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -97,8 +98,19 @@ class ArticleCommentDetialView(APIView):
 
 
 class LikeView(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
     def get(self, request):
         user = request.user
         likes = user.article_likes.all()
         serializer = ArticleSerializer(likes, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class LikerankView(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get(self, request):
+        articles = Article.objects.annotate(count=Count("likes")).order_by("-count")[:3]
+        serializer = ArticleSerializer(articles, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
