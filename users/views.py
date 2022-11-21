@@ -1,9 +1,10 @@
-from rest_framework import status
+from rest_framework import permissions, status
+from rest_framework import generics
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from users.models import User, Profile
-from users.serializers import FollowingSerializer, ProfileSerializer, UserSerializer
+from users.serializers import ChangePasswordSerializer, FollowingSerializer, ProfileSerializer, UserSerializer
 from django.contrib.auth import logout
 
 
@@ -62,3 +63,9 @@ class FollowingUserView(APIView):
         else:
             user.following.add(request.user)
             return Response("팔로우!", status=status.HTTP_200_OK)
+
+
+class ChangePasswordView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = ChangePasswordSerializer
