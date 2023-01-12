@@ -1,6 +1,13 @@
 # Created by https://www.toptal.com/developers/gitignore/api/django,windows,visualstudiocode,venv
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,windows,visualstudiocode,venv
 
+### 추가 항목 ###
+.idea
+.vscode
+.gitmessage.txt
+0*_*.py
+backup
+
 ### Django ###
 *.log
 *.pot
@@ -10,11 +17,6 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media
-
-### 추가 항목 ###
-.idea
-.vscode
-.gitmessage.txt
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
